@@ -23,12 +23,19 @@ import org.apache.dolphinscheduler.dao.entity.PluginDefine;
 import org.apache.dolphinscheduler.dao.mapper.PluginDefineMapper;
 import org.apache.dolphinscheduler.plugin.task.api.TaskPluginException;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
+
+import javax.sql.DataSource;
 
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
 
 @Slf4j
@@ -38,13 +45,26 @@ public class PluginDao {
     @Autowired
     private PluginDefineMapper pluginDefineMapper;
 
+    @Autowired
+    private DataSource dataSource;
+
+    private static final String PLUGIN_DEFINE_TABLE_NAME = "t_ds_plugin_define";
+
     /**
      * check plugin define table exist
      *
      * @return boolean
      */
     public boolean checkPluginDefineTableExist() {
-        return pluginDefineMapper.checkTableExist() > 0;
+
+        try (Connection connection = DataSourceUtils.getConnection(dataSource)) {
+            DatabaseMetaData metaData = connection.getMetaData();
+            try (ResultSet tables = metaData.getTables(null, null, PLUGIN_DEFINE_TABLE_NAME, new String[]{"TABLE"})) {
+                return tables.next();
+            }
+        } catch (SQLException ex) {
+            throw new IllegalStateException("Failed to check plugin define table existence", ex);
+        }
     }
 
     /**
