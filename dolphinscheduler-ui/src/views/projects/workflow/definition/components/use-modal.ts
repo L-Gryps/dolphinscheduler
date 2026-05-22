@@ -210,6 +210,10 @@ export function useModal(
         label: item.tenantCode,
         value: item.tenantCode
       }))
+      const form = state.startForm || state.timingForm
+      if (!form.tenantCode && variables.tenantList.length) {
+        form.tenantCode = variables.tenantList[0].value
+      }
     })
   }
 
