@@ -867,7 +867,7 @@ DROP TABLE IF EXISTS t_ds_task_instance_context;
 CREATE TABLE t_ds_task_instance_context (
   id SERIAL NOT NULL,
   task_instance_id int NOT NULL,
-  context text NOT NULL,
+  task_instance_context text NOT NULL,
   context_type varchar(200) NOT NULL,
   create_time timestamp NOT NULL,
   update_time timestamp NOT NULL,

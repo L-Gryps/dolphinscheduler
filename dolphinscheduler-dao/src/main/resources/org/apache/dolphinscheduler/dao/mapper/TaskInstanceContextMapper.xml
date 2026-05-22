@@ -22,7 +22,7 @@
         SELECT
             id
             ,task_instance_id
-            ,context
+            ,task_instance_context
             ,context_type
             ,create_time
             ,update_time
@@ -43,7 +43,7 @@
         SELECT
             id
             ,task_instance_id
-            ,context
+            ,task_instance_context
             ,context_type
             ,create_time
             ,update_time

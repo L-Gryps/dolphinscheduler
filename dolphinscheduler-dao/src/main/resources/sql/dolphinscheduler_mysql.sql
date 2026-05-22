@@ -951,7 +951,7 @@ DROP TABLE IF EXISTS `t_ds_task_instance_context`;
 CREATE TABLE `t_ds_task_instance_context` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `task_instance_id` int(11) NOT NULL,
-    `context` text NOT NULL,
+    `task_instance_context` text NOT NULL,
     `context_type` varchar(200) NOT NULL COMMENT 'context type',
     `create_time` datetime NOT NULL,
     `update_time` datetime NOT NULL,
